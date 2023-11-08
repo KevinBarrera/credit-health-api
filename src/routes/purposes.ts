@@ -1,17 +1,9 @@
-import { Router } from "express";
-import {createPurpose, deletePurpose, getOnePurpose, getPurposes, updatePurpose} from "../controllers/purposes.controller";
+import { Router, Request, Response } from "express";
 
 const router = Router();
 
-
-router.post("/", createPurpose);
-
-router.get("/", getPurposes);
-
-router.get("/:id", getOnePurpose);
-
-router.put("/:id", updatePurpose);
-
-router.delete("/:id", deletePurpose);
+router.get("/", (req: Request, res: Response) => {
+  res.send({data: "Purchases"});
+});
 
 export { router };

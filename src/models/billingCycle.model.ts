@@ -50,7 +50,6 @@ BillingCycle.init({
   sequelize,
   modelName: 'BillingCycle',
   tableName: 'billing_cycles',
-  timestamps: true,
 });
 
 export default BillingCycle;
