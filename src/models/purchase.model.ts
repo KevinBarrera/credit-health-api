@@ -110,7 +110,6 @@ Purchase.init({
   sequelize,
   modelName: 'Purchase',
   tableName: 'purchases',
-  timestamps: false,
 });
 
 export default Purchase;
