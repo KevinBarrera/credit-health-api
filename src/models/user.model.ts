@@ -34,6 +34,7 @@ User.init({
   lastName: {
     type: DataTypes.STRING,
     allowNull: false,
+    field: 'last_name',
   },
   password: {
     type: DataTypes.STRING,
@@ -42,6 +43,7 @@ User.init({
   birthDate: {
     type: DataTypes.DATE,
     allowNull: false,
+    field: 'birth_date',
   }
 }, {
   sequelize,
