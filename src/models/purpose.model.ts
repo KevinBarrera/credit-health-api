@@ -22,6 +22,7 @@ Purpose.init({
   sequelize,
   modelName: 'Purpose',
   tableName: 'purposes',
+  timestamps: false,
 });
 
 export default Purpose;

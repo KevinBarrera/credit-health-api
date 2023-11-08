@@ -21,6 +21,7 @@ BillingCycle.init({
   statementBalance: {
     type: DataTypes.REAL,
     allowNull: false,
+    field: 'statement_balance',
   },
   status: {
     type: DataTypes.ENUM('pending', 'paid'),
@@ -50,6 +51,7 @@ BillingCycle.init({
   sequelize,
   modelName: 'BillingCycle',
   tableName: 'billing_cycles',
+  timestamps: false,
 });
 
 export default BillingCycle;

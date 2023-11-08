@@ -47,14 +47,17 @@ Card.init({
   lastFourDigits: {
     type: DataTypes.STRING,
     allowNull: false,
+    field: 'last_four_digits',
   },
   closingDate: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    field: 'closing_date',
   },
   gracePeriod: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    field: 'grace_period',
   },
   userId: {
     type: DataTypes.UUID,
@@ -68,6 +71,7 @@ Card.init({
   sequelize,
   modelName: 'Card',
   tableName: 'cards',
+  timestamps: false,
 });
 
 export default Card;

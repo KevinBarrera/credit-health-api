@@ -16,7 +16,6 @@ class Purchase extends Model {
   public merchant!: string;
   public status!: 'reserved' | 'pending' | 'paid';
   public purchaserName!: string;
-  public purchaserLastName!: string;
   public purposeId!: string;
   public cardId!: string;
   public billingCycleId!: string;
@@ -35,6 +34,7 @@ Purchase.init({
   installmentPlanTotal: {
     type: DataTypes.REAL,
     allowNull: false,
+    field: 'installment_plan_total',
   },
   installment: {
     type: DataTypes.INTEGER,
@@ -43,10 +43,12 @@ Purchase.init({
   purchaseDate: {
     type: DataTypes.DATE,
     allowNull: false,
+    field: 'purchase_date',
   },
   issuerLogDate: {
     type: DataTypes.DATE,
     allowNull: true,
+    field: 'issuer_log_date',
   },
   amount: {
     type: DataTypes.REAL,
@@ -73,11 +75,6 @@ Purchase.init({
     type: DataTypes.STRING,
     allowNull: false,
     field: 'purchaser_name',
-  },
-  purchaserLastName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    field: 'purchaser_lastName',
   },
   purposeId: {
     type: DataTypes.UUID,
@@ -110,6 +107,7 @@ Purchase.init({
   sequelize,
   modelName: 'Purchase',
   tableName: 'purchases',
+  timestamps: false,
 });
 
 export default Purchase;
