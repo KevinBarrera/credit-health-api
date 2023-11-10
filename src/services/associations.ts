@@ -44,10 +44,4 @@ Purchase.belongsTo(BillingCycle);
 Purpose.hasMany(Purchase);
 Purchase.belongsTo(Purpose);
 
-export {
-  BillingCycle,
-  Card,
-  Purchase,
-  Purpose,
-  User
-}
+export { BillingCycle, Card, Purchase, Purpose, User };

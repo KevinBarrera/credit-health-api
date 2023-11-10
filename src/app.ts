@@ -1,8 +1,8 @@
 import "dotenv/config";
-import express from "express";
 import cors from "cors";
-import { router } from "./routes"
+import express from "express";
 import sequelize from "./config/sequelize";
+import { router } from "./routes";
 
 const PORT = process.env.PORT ?? 3002;
 const app = express();
@@ -13,13 +13,15 @@ app.disable("x-powered-by");
 
 app.use(router);
 
-try {
-  sequelize.authenticate();
-  console.log('Connection has been established successfully.');
-} catch (error) {
-  console.error('Unable to connect to the database:', error);
-}
+void (async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("Connection has been established successfully.");
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
+})();
 
 app.listen(PORT, () => {
-  console.log(`App running on http://localhost:${PORT}`)
+  console.log(`App running on http://localhost:${PORT}`);
 });

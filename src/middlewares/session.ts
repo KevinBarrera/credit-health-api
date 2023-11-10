@@ -1,20 +1,24 @@
 import { NextFunction, Response } from "express";
-import { verifyToken } from "../utils/jwt.handle";
-import { AuthenticatedRequest } from "../interfaces/authenticatedRequest.interface";
 import { JwtPayload } from "jsonwebtoken";
+import { AuthenticatedRequest } from "../interfaces/authenticatedRequest.interface";
+import { verifyToken } from "../utils/jwt.handle";
 
-const validateJwt = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+const validateJwt = (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const jwtReceived = req.headers.authorization ?? null;
     const jwt = jwtReceived?.split(" ").pop() ?? "";
     const sessionData = verifyToken(jwt) as JwtPayload;
 
-    if(!sessionData) {
+    if (!sessionData) {
       res.status(401).send({
         message: "Invalid token.",
         data: null,
         error: null
-      })
+      });
     }
 
     const now = Date.now() / 1000;
@@ -39,8 +43,8 @@ const validateJwt = (req: AuthenticatedRequest, res: Response, next: NextFunctio
     res.status(401).send({
       message: "Invalid token.",
       data: null,
-      error: error
-    })
+      error
+    });
   }
 };
 
