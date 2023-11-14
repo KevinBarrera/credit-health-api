@@ -1,11 +1,11 @@
 import { Options } from "nodemailer/lib/sendmail-transport";
+import { Otp } from "../config/entityRelations";
 import { ApiResponse } from "../interfaces/apiResponse.interface";
 import { CustomError } from "../interfaces/customError.interface";
 import { OtpData } from "../interfaces/otpData.interface";
 import { sendEmail } from "../utils/email.handle";
 import { encrypt } from "../utils/encryption.handle";
-import { generateOtp } from "../utils/otpSystem";
-import { Otp } from "./associations";
+import { generateOtp } from "../utils/otp.handle";
 
 const sendOtpCode = async (
   email: string,

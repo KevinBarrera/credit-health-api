@@ -1,10 +1,10 @@
+import { User } from "../config/entityRelations";
 import { ApiResponse } from "../interfaces/apiResponse.interface";
 import { AuthI } from "../interfaces/auth.interface";
 import { CustomError } from "../interfaces/customError.interface";
 import { UserI } from "../interfaces/user.interface";
 import { encrypt, verify } from "../utils/encryption.handle";
 import { generateToken } from "../utils/jwt.handle";
-import { User } from "./associations";
 
 const registerNewUser = async (data: UserI): Promise<ApiResponse<User>> => {
   try {
