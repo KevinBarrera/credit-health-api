@@ -11,6 +11,18 @@ const EmailContentSchema = z.object({
   })
 });
 
-export type EmailContentBody = z.infer<typeof EmailContentSchema>["body"];
+const VerifyOtpSchema = z.object({
+  body: z.object({
+    email: z
+      .string({ required_error: "Email is required" })
+      .email("Invalid email"),
+    otp: z
+      .string({ required_error: "OTP is required" })
+      .length(6, "OTP code must contain exactly 6 character(s)")
+  })
+});
 
-export { EmailContentSchema };
+export type EmailContentBody = z.infer<typeof EmailContentSchema>["body"];
+export type VerifyOtpBody = z.infer<typeof VerifyOtpSchema>["body"];
+
+export { EmailContentSchema, VerifyOtpSchema };
