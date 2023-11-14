@@ -11,6 +11,7 @@ class User extends Model {
   public lastName!: string;
   public password!: string;
   public birthDate!: Date;
+  public verified!: boolean;
 }
 
 User.init(
@@ -45,6 +46,11 @@ User.init(
       type: DataTypes.DATE,
       allowNull: false,
       field: "birth_date"
+    },
+    verified: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   },
   {
