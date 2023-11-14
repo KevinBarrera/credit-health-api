@@ -1,12 +1,13 @@
 import { User } from "../config/entityRelations";
 import { ApiResponse } from "../interfaces/apiResponse.interface";
-import { AuthI } from "../interfaces/auth.interface";
 import { CustomError } from "../interfaces/customError.interface";
-import { UserI } from "../interfaces/user.interface";
+import { LoginSchemaBody, RegisterSchemaBody } from "../schemas/auth.schemas";
 import { encrypt, verify } from "../utils/encryption.handle";
 import { generateToken } from "../utils/jwt.handle";
 
-const registerNewUser = async (data: UserI): Promise<ApiResponse<User>> => {
+const registerNewUser = async (
+  data: RegisterSchemaBody
+): Promise<ApiResponse<User>> => {
   try {
     const doesUserExist = await User.findOne({ where: { email: data.email } });
 
@@ -40,7 +41,7 @@ const registerNewUser = async (data: UserI): Promise<ApiResponse<User>> => {
   }
 };
 
-const loginUser = async ({ email, password }: AuthI) => {
+const loginUser = async ({ email, password }: LoginSchemaBody) => {
   try {
     const user = await User.findOne({ where: { email } });
 
