@@ -3,25 +3,17 @@ import { Otp } from "../config/entityRelations";
 import { ApiResponse } from "../interfaces/apiResponse.interface";
 import { CustomError } from "../interfaces/customError.interface";
 import { OtpData } from "../interfaces/otpData.interface";
+import { EmailContentBody } from "../schemas/otp.schemas";
 import { sendEmail } from "../utils/email.handle";
 import { encrypt } from "../utils/encryption.handle";
 import { generateOtp } from "../utils/otp.handle";
 
 const sendOtpCode = async (
-  email: string,
-  subject: string,
-  message: string,
-  duration = 1
+  content: EmailContentBody
 ): Promise<ApiResponse<OtpData>> => {
   try {
-    if (!(email && subject && message)) {
-      return {
-        status: 400,
-        message: "Missing fields.",
-        data: null,
-        error: null
-      };
-    }
+    const { email, subject, message, duration } = content;
+    console.table(content);
 
     await Otp.destroy({
       where: {
@@ -47,7 +39,7 @@ const sendOtpCode = async (
       email,
       otp: hashedOtp,
       createdAt: Date.now(),
-      expiresAt: Date.now() + 3600000 * Number(duration)
+      expiresAt: Date.now() + 3600000 * duration
     });
 
     return {

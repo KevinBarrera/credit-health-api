@@ -1,23 +1,26 @@
 import { Request, Response } from "express";
+import { LoginSchemaBody, RegisterSchemaBody } from "../schemas/auth.schemas";
 import { loginUser, registerNewUser } from "../services/auth";
 import { handleHttp } from "../utils/error.handle";
 
-const register = async ({ body }: Request, res: Response) => {
+const register = async (
+  req: Request<unknown, unknown, RegisterSchemaBody>,
+  res: Response
+) => {
   try {
-    const { status, message, data, error } = await registerNewUser(body);
+    const { status, message, data, error } = await registerNewUser(req.body);
     res.status(status).send({ message, data, error });
   } catch (error) {
     handleHttp(res, error);
   }
 };
 
-const login = async ({ body }: Request, res: Response) => {
+const login = async (
+  req: Request<unknown, unknown, LoginSchemaBody>,
+  res: Response
+) => {
   try {
-    const { email, password } = body;
-    const { status, message, data, error } = await loginUser({
-      email,
-      password
-    });
+    const { status, message, data, error } = await loginUser(req.body);
     res.status(status).send({ message, data, error });
   } catch (error) {
     handleHttp(res, error);
