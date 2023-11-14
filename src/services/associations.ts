@@ -1,5 +1,6 @@
 import BillingCycle from "../models/billingCycle.model";
 import Card from "../models/card.model";
+import Otp from "../models/otp.model";
 import Purchase from "../models/purchase.model";
 import Purpose from "../models/purpose.model";
 import User from "../models/user.model";
@@ -44,4 +45,4 @@ Purchase.belongsTo(BillingCycle);
 Purpose.hasMany(Purchase);
 Purchase.belongsTo(Purpose);
 
-export { BillingCycle, Card, Purchase, Purpose, User };
+export { BillingCycle, Card, Otp, Purchase, Purpose, User };
