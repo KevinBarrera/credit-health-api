@@ -5,8 +5,8 @@ import { Options } from "nodemailer/lib/sendmail-transport";
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMPT_HOST ?? "",
-  port: Number(process.env.SMPT_HOST) ?? 111,
+  host: process.env.SMTP_HOST ?? "",
+  port: Number(process.env.SMTP_PORT) ?? 111,
   auth: {
     user: process.env.SMTP_EMAIL ?? "",
     pass: process.env.SMTP_PASS ?? ""
