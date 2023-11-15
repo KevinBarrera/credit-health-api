@@ -1,6 +1,7 @@
 import { NextFunction, Response } from "express";
 import { JwtPayload } from "jsonwebtoken";
 import { AuthenticatedRequest } from "../interfaces/authenticatedRequest.interface";
+import { handleHttp } from "../utils/error.handle";
 import { verifyToken } from "../utils/jwt.handle";
 
 const validateJwt = (
@@ -17,34 +18,30 @@ const validateJwt = (
       res.status(401).send({
         message: "Invalid token.",
         data: null,
-        error: null
+        error: "Invalid token. Please reauthenticate to obtain a valid one."
       });
     }
-
     const now = Date.now() / 1000;
     if (sessionData.iat && sessionData.iat > now) {
       res.status(401).send({
-        message: "Invalid token. Issued in the future.",
+        message: "Invalid token.",
         data: null,
-        error: null
+        error: "Invalid token. Issued in the future."
       });
     }
     if (sessionData.exp && sessionData.exp <= now) {
       res.status(401).send({
-        message: "Token has expired. Please reauthenticate.",
+        message: "Invalid token.",
         data: null,
-        error: null
+        error: "Token has expired. Please reauthenticate."
       });
     }
 
     req.session = sessionData;
+
     next();
   } catch (error) {
-    res.status(401).send({
-      message: "Invalid token.",
-      data: null,
-      error
-    });
+    handleHttp(res, error);
   }
 };
 
