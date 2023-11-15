@@ -45,6 +45,8 @@ const verifyUserEmailWithOtp = async (
       data: result.data ? { isEmailVerified: result.data.isOtpValid } : null
     };
     if (contextualResult.data?.isEmailVerified) {
+      const user = await User.findOne({ where: { email } });
+      await user?.update({ verified: true });
       await Otp.destroy({ where: { email } });
     }
     return contextualResult;
