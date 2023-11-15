@@ -11,6 +11,6 @@ const router = Router();
 
 router.post("/", validateSchema(EmailSchema), sendVerificationOtpEmail);
 
-router.post("/verify", validateSchema(VerifyOtpSchema), verifyUserEmail);
+router.patch("/", validateSchema(VerifyOtpSchema), verifyUserEmail);
 
 export { router };
