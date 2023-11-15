@@ -2,13 +2,13 @@ import { Otp, User } from "../config/entityRelations";
 import { ApiResponse } from "../interfaces/apiResponse.interface";
 import { CustomError } from "../interfaces/customError.interface";
 import { OtpData } from "../interfaces/otpData.interface";
-import { EmailVerificationBody } from "../schemas/emailVerification.schemas";
+import { EmailBody } from "../schemas/email.schemas";
 import { EmailContentBody, VerifyOtpBody } from "../schemas/otp.schemas";
 import { sendOtpCode, verifyOtpCode } from "./otp";
 
 const sendVerificationOtpEmailCode = async ({
   email
-}: EmailVerificationBody): Promise<ApiResponse<OtpData>> => {
+}: EmailBody): Promise<ApiResponse<OtpData>> => {
   try {
     const existingUser = await User.findOne({ where: { email } });
     if (!existingUser) {

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { EmailVerificationBody } from "../schemas/emailVerification.schemas";
+import { EmailBody } from "../schemas/email.schemas";
 import { VerifyOtpBody } from "../schemas/otp.schemas";
 import {
   sendVerificationOtpEmailCode,
@@ -8,7 +8,7 @@ import {
 import { handleHttp } from "../utils/error.handle";
 
 const sendVerificationOtpEmail = async (
-  req: Request<unknown, unknown, EmailVerificationBody>,
+  req: Request<unknown, unknown, EmailBody>,
   res: Response
 ) => {
   try {
