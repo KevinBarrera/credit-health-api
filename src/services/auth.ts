@@ -58,7 +58,7 @@ const loginUser = async ({ email, password }: LoginSchemaBody) => {
       return {
         status: 404,
         message:
-          "User not found. Please check your username or register for a new account.",
+          "User not found. Please check your email or register for a new account.",
         data: null,
         error: `User with email ${email} not found.`
       };

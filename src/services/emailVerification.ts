@@ -36,20 +36,30 @@ const sendVerificationOtpEmailCode = async ({
 
 const verifyUserEmailWithOtp = async (
   data: VerifyOtpBody
-): Promise<ApiResponse<{ isEmailVerified: boolean }>> => {
+): Promise<ApiResponse<{ email: string; emailVerified: boolean }>> => {
   try {
     const { email } = data;
-    const result = await verifyOtpCode(data);
-    const contextualResult = {
-      ...result,
-      data: result.data ? { isEmailVerified: result.data.isOtpValid } : null
-    };
-    if (contextualResult.data?.isEmailVerified) {
-      const user = await User.findOne({ where: { email } });
-      await user?.update({ verified: true });
-      await Otp.destroy({ where: { email } });
+    const verifyOtpResult = await verifyOtpCode(data);
+    if (!verifyOtpResult.data?.isOtpValid) {
+      return {
+        status: 400,
+        message:
+          "Invalid data. Please check the email or OTP code and try again.",
+        error: verifyOtpResult,
+        data: null
+      };
     }
-    return contextualResult;
+
+    const user = await User.findOne({ where: { email } });
+    await user?.update({ verified: true });
+    await Otp.destroy({ where: { email } });
+
+    return {
+      status: 200,
+      message: "Email successfully verified. You can log in now.",
+      data: { email: data.email, emailVerified: true },
+      error: null
+    };
   } catch (error) {
     throw new CustomError(500, "Internal server error.", null, error);
   }

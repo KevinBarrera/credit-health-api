@@ -43,7 +43,7 @@ const sendOtpCode = async (
 
     return {
       status: 201,
-      message: "Confirmation code was successfully sent",
+      message: "OTP code was successfully sent",
       error: null,
       data: newOtp
     };
