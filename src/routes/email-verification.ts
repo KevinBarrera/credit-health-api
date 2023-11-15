@@ -4,16 +4,12 @@ import {
   verifyUserEmail
 } from "../controllers/emailVerification.controller";
 import { validateSchema } from "../middlewares/schemaValidator";
-import { EmailVerificationSchema } from "../schemas/emailVerification.schemas";
+import { EmailSchema } from "../schemas/email.schemas";
 import { VerifyOtpSchema } from "../schemas/otp.schemas";
 
 const router = Router();
 
-router.post(
-  "/",
-  validateSchema(EmailVerificationSchema),
-  sendVerificationOtpEmail
-);
+router.post("/", validateSchema(EmailSchema), sendVerificationOtpEmail);
 
 router.post("/verify", validateSchema(VerifyOtpSchema), verifyUserEmail);
 

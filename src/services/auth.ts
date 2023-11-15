@@ -57,9 +57,10 @@ const loginUser = async ({ email, password }: LoginSchemaBody) => {
     if (!user) {
       return {
         status: 404,
-        message: `User with email ${email} not found.`,
+        message:
+          "User not found. Please check your username or register for a new account.",
         data: null,
-        error: null
+        error: `User with email ${email} not found.`
       };
     }
     if (!user.verified) {
@@ -80,7 +81,7 @@ const loginUser = async ({ email, password }: LoginSchemaBody) => {
         status: 401,
         message: `Invalid email or password. Please try again.`,
         data: null,
-        error: null
+        error: "Unauthorized"
       };
     }
 
