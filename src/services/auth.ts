@@ -1,13 +1,15 @@
 import { User } from "../config/entityRelations";
 import { ApiResponse } from "../interfaces/apiResponse.interface";
 import { CustomError } from "../interfaces/customError.interface";
+import { OtpData } from "../interfaces/otpData.interface";
 import { LoginSchemaBody, RegisterSchemaBody } from "../schemas/auth.schemas";
 import { encrypt, verify } from "../utils/encryption.handle";
 import { generateToken } from "../utils/jwt.handle";
+import { sendVerificationOtpEmailCode } from "./emailVerification";
 
 const registerNewUser = async (
   data: RegisterSchemaBody
-): Promise<ApiResponse<User>> => {
+): Promise<ApiResponse<User | OtpData>> => {
   try {
     const doesUserExist = await User.findOne({ where: { email: data.email } });
 
@@ -30,6 +32,13 @@ const registerNewUser = async (
       birthDate: data.birthDate
     });
 
+    const emailProcessResult = await sendVerificationOtpEmailCode({
+      email: newUser.email
+    });
+    if (emailProcessResult.status !== 201) {
+      return emailProcessResult;
+    }
+
     return {
       status: 201,
       message: `User with email ${newUser.email} created.`,
@@ -51,6 +60,15 @@ const loginUser = async ({ email, password }: LoginSchemaBody) => {
         message: `User with email ${email} not found.`,
         data: null,
         error: null
+      };
+    }
+    if (!user.verified) {
+      return {
+        status: 403,
+        message:
+          "Email verification is required before logging in. Please check your email for the OTP.",
+        data: null,
+        error: `User has not verified the email ${email}.`
       };
     }
 
