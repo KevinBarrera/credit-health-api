@@ -23,12 +23,17 @@ const RegisterSchema = z.object({
     name: z.string({ required_error: "Name is required" }),
     lastName: z.string({ required_error: "Last name is required" }),
     birthDate: z
-      .date({
-        required_error: "Please select a date and time",
-        invalid_type_error: "That's not a date!"
+      .string({
+        required_error: "Please provide a date and time",
+        invalid_type_error: "That's not a valid date and time!"
       })
-      .min(new Date("1900-01-01"), { message: "Too old" })
-      .max(new Date(), { message: "Too young!" })
+      .datetime()
+      .refine((value) => new Date(value) >= new Date("1900-01-01"), {
+        message: "Too old"
+      })
+      .refine((value) => new Date(value) <= new Date(), {
+        message: "Too young!"
+      })
   })
 });
 
