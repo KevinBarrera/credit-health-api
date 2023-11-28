@@ -5,13 +5,14 @@ import sequelize from "./config/sequelize";
 import { router } from "./routes";
 
 const PORT = process.env.PORT ?? 3002;
+const API_VERSION = "v1";
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.disable("x-powered-by");
 
-app.use(router);
+app.use(`/api/${API_VERSION}`, router);
 
 void (async () => {
   try {
@@ -23,5 +24,5 @@ void (async () => {
 })();
 
 app.listen(PORT, () => {
-  console.log(`App running on http://localhost:${PORT}`);
+  console.log(`App running on http://localhost:${PORT}/api/${API_VERSION}`);
 });
